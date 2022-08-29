@@ -56,7 +56,7 @@ user2.addPet('Lobo marino');
 user2.addPet('Iguana');
 user2.countPets();
 console.log( `Libros de ${user2.userName} :` );
-user.getBookNames();
+user2.getBookNames();
 console.log('--------------------------UPDATE INFO - USER2---------------------------');
 console.log(user2);
 console.log('------------------------------------------------------------------------');
