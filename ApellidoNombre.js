@@ -7,7 +7,7 @@ class Usuario {
     }
     //Retorna el nombre completo || Utilizar template strings. 
     getFullName (){
-        return console.log(`Su nombre es ${this.userName} y se apellida ${this.userLastname}.`);
+        return this.userName, this.userLastname;
     }
     //Recibe un nombre de mascota y lo agrega al array
     addPet(newPet){

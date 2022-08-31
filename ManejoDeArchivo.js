@@ -80,9 +80,10 @@ class Contenedor{
 
     async deleteAll(){
         try {
+            let arry = '';
             let contentido = await fs.promises.readFile(`./${this.name}`,'utf-8');
             let contenidojson = JSON.parse(contentido);
-
+            await fs.promises.writeFile(`./${this.name}`,JSON.stringify(arry));
         }
         catch (error) {
             
@@ -101,9 +102,9 @@ let newInfo = {
     "price": 450.50
 }
 
-//  contenedor.save(newInfo).then(res => {
-//      console.log(res);
-//  });
+  contenedor.save(newInfo).then(res => {
+      console.log(res);
+  });
 
 
 // contenedor.getById(3).then(res => {
@@ -114,6 +115,6 @@ let newInfo = {
 //     console.log(res);
 // });
 
-contenedor.deleteAll().then(res => {
-    console.log(res);
-});
+// contenedor.deleteAll().then(res => {
+//     console.log(res);
+// });
