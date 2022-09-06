@@ -7,7 +7,7 @@ class Usuario {
     }
     //Retorna el nombre completo || Utilizar template strings. 
     getFullName (){
-        return this.userName, this.userLastname;
+        return `${this.userName} ${this.userLastname}`;
     }
     //Recibe un nombre de mascota y lo agrega al array
     addPet(newPet){
@@ -18,11 +18,14 @@ class Usuario {
         let i = 0;
         this.userPet.forEach(element => ++i);
         //return i;
-        return console.log(`Usted tiene ${i} mascotas.`);
+        return i;
+    }
+    addBook(name,author){
+        this.userBooks.push({title : name, author : author})
     }
     //Muestra los nombres de los libros del usuario
     getBookNames(){
-        this.userBooks.forEach(element => console.log(element.title));
+         return this.userBooks.map(element => element.title);
     }
 
 };
