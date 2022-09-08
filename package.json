@@ -1,10 +1,12 @@
 {
   "name": "desafiosentregables",
   "version": "1.0.0",
-  "description": "",
-  "main": "ApellidoNombre.js",
+  "main": "ServidorExpress.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ServidorExpress.js",
+    "start-dev": "nodemon ServidorExpress.js"
+    
   },
   "repository": {
     "type": "git",
@@ -16,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/agdul/CoderHouser-Backend/issues"
   },
-  "homepage": "https://github.com/agdul/CoderHouser-Backend#readme"
+  "homepage": "https://github.com/agdul/CoderHouser-Backend#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
 }
