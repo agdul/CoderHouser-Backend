@@ -8,92 +8,75 @@ const products = [
 ];
 
 
-const users = [
-  {
-    id: 1,
-    name: 'Jorge',
-    lastname: 'Malo',
-    age: 29,
-    email: 'jorge@housemalo.com',
-    role: 'support'
-  },
-  {
-    id: 2,
-    name: 'Daenerys',
-    lastname: 'Targaryen',
-    age: 16,
-    email: 'dan@housetargaryen.com',
-    role: 'lead'
-  },
-  {
-    id: 3,
-    name: 'Jon',
-    lastname: 'Snow',
-    age: 24,
-    email: 'jon@housestark.com',
-    role: 'lead'
-  },
-  {
-    id: 4,
-    name: 'Arya',
-    lastname: 'Stark',
-    age: 18,
-    email: 'arya@housestark.com',
-    role: 'assassin'
-  },
-  {
-    id: 5,
-    name: 'Robb',
-    lastname: 'Stark',
-    age: 20,
-    email: 'robb@housestark.com',
-    role: 'lead'
-  },
-  {
-    id: 6,
-    name: 'Tyrion',
-    lastname: 'Lannister',
-    age: 39,
-    email: 'tyirion@houselannister.com',
-    role: 'support'
-  },
-  {
-    id: 7,
-    name: 'Brandon',
-    lastname: 'Stark',
-    age: 34,
-    email: 'bran@housestark.com',
-    role: 'psychic'
-  },
-  {
-    id: 8,
-    name: 'Hodor',
-    lastname: 'Hodor',
-    age: 38,
-    email: 'Hodor',
-    role: 'support'
-  },
-  {
-    id: 9,
-    name: 'Bronn',
-    lastname: '',
-    age: null,
-    email: 'bronn@blackwater',
-    role: 'assassin'
-  },
-  {
-    id: 10,
-    name: 'Lionel',
-    lastname: 'Messi',
-    age: 34,
-    email: 'lapulga@balondeoro.com',
-    role: 'god'
-  },
-];
+class Products {
+  static lastProductId = products[products.length - 1].id;
 
+  constructor(){
+    this.list = products;
+  }
+
+  getAll(){
+    return this.list;
+  }
+
+  getById(productId){
+    return this.list.find(product => product.id === +productId);
+  }
+
+  save(product){
+    const { title, price, thumbnail} = product;
+    if (!title || !price || !thumbnail){
+      return null;
+    }
+    Products.lastProductId++;
+    const newProduct = {
+      id: Products.lastProductId,
+      title,
+      price,
+      thumbnail
+    };
+    this.list.push(newProduct);
+    return newProduct;
+  }
+
+  delete(productId){
+    const deletId = this.list.find(product => product.id === +productId);
+
+    if(deletId < 0){
+      return null;
+    }
+    this.list.splice(deletId, 1);
+
+    return deletId;
+  }
+
+  update(product){
+    if(!product.title || !product.price || !product ){ 
+      return null;
+    } 
+
+    const editId = this.list.findIndex(product => product.id === +product.id);
+
+    if(editId < 0){
+      return null;
+    }
+    
+    const newProduct = {
+      ...products[editId],
+      title,
+      price,
+      thumbnail
+    };
+
+    product[editId] = newProduct;
+    return newProduct;
+  }
+
+}
 
 
 module.exports = {
-  products,
-  users,
+  products
 };
+
+
