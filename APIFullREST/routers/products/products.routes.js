@@ -1,5 +1,5 @@
 const express = require('express');
-const { products } = require('../../data/data');
+const { products } = require('../../data/products');
 
 const router = express.Router();
 
@@ -9,70 +9,56 @@ const router = express.Router();
 
 
 router.get('/', (req, res) => {
-const { maxPrice, search } = req.query;
-    let productsResponse = [...products];
-    if (Object.keys(req.query).length > 0) {
-      if (maxPrice) {
-        if (isNaN(+maxPrice)) {
-          return res.status(400).json({success: false, error: 'maxPrice must be a valid number'});
-        }
-        productsResponse = productsResponse.filter(product => product.price <= +maxPrice);
-      }
-      if (search) {
-        productsResponse = productsResponse.filter(product => product.title.toLowerCase().startsWith(search.toLowerCase()))
-      }
-      return res.json({success: true, result: productsResponse });
-    }
-      return res.json({success: true, result: productsResponse });
-  });
+
+});
   
   router.get('/:productId', (req, res) => {
     const { productId } = req.params;
-    const product = products.find(product => product.id === +productId);
+    const product = products.getById(productId);
     if (!product) {
-      return res.status(404).json({ success: false, error: `Product with id: ${productId} does not exist!`});
+      return res.status(404).json({error: `Product with id: ${productId} does not exist!`});
     }
-    return res.json({ success: true, result: product });
+    return res.json(product);
   });
   
   router.post('/', (req, res) => {
     const { name, price, thumbnail} = req.body;
     if ( !name || !price || !thumbnail) {
-      return res.status(400).json({ succes: false, error: 'Wrong body format' });
+      return res.status(400).json({error: 'Wrong body format' });
     }
-    const newProduct = {
-      id: products.length + 1,
-      name,
-      price,
-      thumbnail
-    };
-    products.push(newProduct);
-    return res.json({ success: true, result: newProduct });
+    // const newProduct = {
+    //   id: products.lastProductId + 1,
+    //   name,
+    //   price,
+    //   thumbnail
+    // };
+    products.save(req.body);
+    return res.json(newProduct);
   });
   
-  router.put('/:productId', (req, res) => {
+  router.put('/:productId', async(req, res) => {
     const { params: { productId }, body: { name, price, thumbnail} } = req;
     if ( !name || !price || !thumbnail) {
-      return res.status(400).json({ success: false, error: 'Wrong body format' });
+      return res.status(400).json({error: 'Wrong body format' });
     };
-    const productIndex = products.findIndex((product) => product.id === +productId);
-    if (productIndex < 0) return res.status(404).json({ success: false, error: `Product with id: ${productId} does not exist!`});
-    const newProduct = {
-      ...products[productIndex],
-      name,
-      price,
-      thumbnail
-    };
-    products[productIndex] = newProduct;
-    return res.json({ success: true, result: newProduct});
+    // const productIndex = products.findIndex((product) => product.id === +productId);
+    // if (productIndex < 0) return res.status(404).json({error: `Product with id: ${productId} does not exist!`});
+    // const newProduct = {
+    //   ...products[productIndex],
+    //   name,
+    //   price,
+    //   thumbnail
+    // };
+    // products[productIndex] = newProduct;
+
+    const update = await products.update(req);
+    return res.json(update.then);
   });
   
-  router.delete('/:productId', (req, res) => {
+  router.delete('/:productId', async(req, res) => {
     const { productId } = req.params;
-    const productIndex = products.findIndex(product => product.id === +productId);
-    if (productIndex < 0) return res.status(404).json({ success: false, error: `Product with id ${productId} does not exist!`});
-    products.splice(productIndex, 1);
-    return res.json({ success: true, result: 'product correctly eliminated' });
+    const itemDelete = await products.delete(productId);
+    return res.json(itemDelete.then);
   });
 
 
