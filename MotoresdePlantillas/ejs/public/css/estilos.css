@@ -1,0 +1,17 @@
+h1 {
+    color: rgb(0, 0, 0);
+}
+
+label {
+    font-weight:lighter;
+    font-style: sans-serif;
+}
+
+.jumbotron{
+    min-height: 100vh;
+}
+
+.jumbotron h1{
+    text-align: center;
+    justify-content: center;
+}
