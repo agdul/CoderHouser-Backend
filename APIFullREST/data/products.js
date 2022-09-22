@@ -40,12 +40,12 @@ class Products {
       return deletId;
     }
   
-    update(product){
+    update(id, product){
       if(!product.title || !product.price || !product ){ 
         return null;
       } 
   
-      const editId = this.list.findIndex(product => product.id === +product.id);
+      const editId = this.list.findIndex(product => product.id === +id);
   
       if(editId < 0){
         return null;
@@ -61,5 +61,6 @@ class Products {
       product[editId] = newProduct;
       return newProduct;
     }
-  
+    
   }
+  module.exports = Products;

@@ -5,5 +5,5 @@ const router = express.Router();
 
 router.use('/products',productsRoutes);
 
-
+module.exports = Products;
 module.exports = router;

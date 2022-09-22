@@ -1,15 +1,15 @@
 const express = require('express');
 const { products } = require('../../data/products');
-
+const productos = require('../../data/data');
 const router = express.Router();
 
 
-
+const products = new Products(productos);
 //RUTAS
 
 
 router.get('/', (req, res) => {
-
+  res.json(products.getAll());
 });
   
   router.get('/:productId', (req, res) => {
@@ -26,43 +26,27 @@ router.get('/', (req, res) => {
     if ( !name || !price || !thumbnail) {
       return res.status(400).json({error: 'Wrong body format' });
     }
-    // const newProduct = {
-    //   id: products.lastProductId + 1,
-    //   name,
-    //   price,
-    //   thumbnail
-    // };
-    products.save(req.body);
+    const newProduct = products.save({name, price, thumbnail});
     return res.json(newProduct);
   });
   
-  router.put('/:productId', async(req, res) => {
+  router.put('/:productId', (req, res) => {
     const { params: { productId }, body: { name, price, thumbnail} } = req;
     if ( !name || !price || !thumbnail) {
       return res.status(400).json({error: 'Wrong body format' });
     };
-    // const productIndex = products.findIndex((product) => product.id === +productId);
-    // if (productIndex < 0) return res.status(404).json({error: `Product with id: ${productId} does not exist!`});
-    // const newProduct = {
-    //   ...products[productIndex],
-    //   name,
-    //   price,
-    //   thumbnail
-    // };
-    // products[productIndex] = newProduct;
-
-    const update = await products.update(req);
-    return res.json(update.then);
+   
+    const update = products.update(productId, {name, price, thumbnail});
+    return res.json(update);
   });
   
-  router.delete('/:productId', async(req, res) => {
+  router.delete('/:productId', (req, res) => {
     const { productId } = req.params;
-    const itemDelete = await products.delete(productId);
-    return res.json(itemDelete.then);
+    const itemDelete = products.delete(productId);
+    return res.json(itemDelete);
   });
 
 
 
 module.exports = router;
-
-
+module.exports = Products;
