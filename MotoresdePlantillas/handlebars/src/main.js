@@ -1,14 +1,14 @@
 const express = require('express')
 const handlebars = require('express-handlebars')
 
-const ProductosApi = require('../api/productos.js')
+const Products = require('../model/productos.js')
 
-const productosApi = new ProductosApi()
+const productos = new Products();
 
-const app = express()
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-app.use(express.static('public'))
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
 
 //--------------------------------------------
 
@@ -26,12 +26,12 @@ app.set("views", "./views");
 
 app.post('/productos', (req, res) => {
     const producto = req.body
-    productosApi.save(producto)
+    productos.save(producto)
     res.redirect('/')
 })
 
 app.get('/productos', (req, res) => {
-    const prods = productosApi.getAll()
+    const prods = productos.getAll()
 
     res.render("vista", {
         productos: prods,
